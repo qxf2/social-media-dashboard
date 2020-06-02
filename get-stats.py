@@ -83,4 +83,7 @@ if __name__ == "__main__":
     
     c.execute("INSERT into stats VALUES(?,?,?,?,?,?,?,?,?,?)",(dt_string,twitter_stats['followers'],twitter_stats['following'],github_forks,subscribers,stars,campaigns_count,subscribers_count,blog_post_count,pull_count))
     conn.commit()
+    c.execute("SELECT * FROM stats ORDER BY recorddate DESC LIMIT 1")
+    result = c.fetchone()
+    print(result)
     conn.close()
