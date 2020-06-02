@@ -46,7 +46,7 @@ def get_all_campaigns():
     campaigns_list = campaigns_dict['campaigns']
     campaigns_count = 1
     for campaign in campaigns_list:
-        if 'The Informed Tester’s Newsletter' in campaign['settings']['title']:
+        if 'The Informed' in campaign['settings']['title']:
             campaigns_count +=1
     
     subscriber_dict = client.lists.members.all('3562d1c87b', get_all=True)
