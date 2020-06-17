@@ -3,23 +3,24 @@ import requests
 import twitter
 from mailchimp3 import MailChimp
 from datetime import datetime
+from conf import credentials_conf as conf
 
 
-client = MailChimp(mc_api='03281ad59bc173990352760cb8970643-us3', mc_user='rohan.j@qxf2.com')
+client = MailChimp(mc_api=conf.MC_API, mc_user=conf.MC_USER)
 
-api = twitter.Api(consumer_key='ipUWYOeJexFpviIzjqC5jBuBx',
-    consumer_secret='ewXUeJbfst1AbGIu2rBY3M64fIuh9NPCS45CDuVcRoLc5KKBS6',
-    access_token_key='155219549-4RmRcfHsaU1hjPpKp0531N9kBCUow4FvY9sbPt6q',
-    access_token_secret='xnXmcKtkMKnnO3IfZgRQmNSFgJpjIiTqXj7nE9JZvzIvA')
+api = twitter.Api(consumer_key=conf.CONSUMER_KEY,
+    consumer_secret=conf.CONSUMER_SECRET,
+    access_token_key= conf.ACCESS_TOKEN_KEY,
+    access_token_secret=conf.ACCESS_TOKEN_SECRET)
 
 def get_docker_pulls():
-    response = requests.get('https://hub.docker.com/v2/repositories/qxf2rohand/qxf2_pom_essentials/')
+    response = requests.get(conf.DOCKER_API_URL)
     jsonResponse = response.json()
     return jsonResponse['pull_count']
 
 def get_github_stats():
     headers = {'Accept': 'application/vnd.github.scarlet-witch-preview+json'}
-    response = requests.get('https://api.github.com/repos/qxf2/qxf2-page-object-model')
+    response = requests.get(conf.GITHUB_API_URL)
     jsonResponse = response.json()
     forks = jsonResponse['forks']
     stars = jsonResponse['stargazers_count']
@@ -27,13 +28,13 @@ def get_github_stats():
     return forks,stars,subscribers
 
 def get_blog_post_stats():
-    response = requests.get('https://qxf2.com/blog/wp-json/wp/v2/posts')
+    response = requests.get(conf.BLOGPOST_API_URL)
     return response.headers['X-WP-Total']
 
 def get_twitter_followers():
     try :
-        followers = api.GetFollowers(screen_name='Qxf21')
-        following = api.GetFriends(screen_name='Qxf21')
+        followers = api.GetFollowers(screen_name=conf.SCREEN_NAME)
+        following = api.GetFriends(screen_name=conf.SCREEN_NAME)
         return {'followers':len(followers),'following':len(following)}
     except:
         followers = 500
@@ -49,7 +50,7 @@ def get_all_campaigns():
         if 'The Informed' in campaign['settings']['title']:
             campaigns_count +=1
     
-    subscriber_dict = client.lists.members.all('3562d1c87b', get_all=True)
+    subscriber_dict = client.lists.members.all(conf.SUBSCRIBER_LIST_ID, get_all=True)
     subscriber_count = 0
     for subscriber in subscriber_dict['members']:
         if subscriber['status'] == 'subscribed':
@@ -67,7 +68,7 @@ if __name__ == "__main__":
     twitter_stats = get_twitter_followers()
     campaigns_count,subscribers_count = get_all_campaigns()
     
-    conn = sqlite3.connect('social-media-dashboard.db')
+    conn = sqlite3.connect(conf.DB_NAME)
     c = conn.cursor()    
     c.execute('''CREATE TABLE if not exists stats(
         recorddate text, 
