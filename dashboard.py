@@ -25,4 +25,4 @@ def home():
     return render_template('index.html',recorddate=recorddate,docker_pull=docker_pull,blog_post_count=blog_post_count,github_forks=github_forks,github_stars=github_stars,github_subscribers=github_subscribers,followers=followers,following=following,campaigns_count=campaigns_count,subscribers_count=subscriber_count)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')

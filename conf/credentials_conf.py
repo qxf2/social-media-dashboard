@@ -2,16 +2,16 @@
 Configuration file for all access keys and db config
 """
 ## Mailchimp ##
-MC_API = '03281ad59bc173990352760cb8970643-us3'
-MC_USER = 'rohan.j@qxf2.com'
-SUBSCRIBER_LIST_ID = '3562d1c87b'
+MC_API = ''
+MC_USER = ''
+SUBSCRIBER_LIST_ID = ''
 
 
 ## Twitter ##
-CONSUMER_KEY = 'ipUWYOeJexFpviIzjqC5jBuBx'
-CONSUMER_SECRET = 'ewXUeJbfst1AbGIu2rBY3M64fIuh9NPCS45CDuVcRoLc5KKBS6'
-ACCESS_TOKEN_KEY = '155219549-4RmRcfHsaU1hjPpKp0531N9kBCUow4FvY9sbPt6q'
-ACCESS_TOKEN_SECRET = 'xnXmcKtkMKnnO3IfZgRQmNSFgJpjIiTqXj7nE9JZvzIvA'
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+ACCESS_TOKEN_KEY = ''
+ACCESS_TOKEN_SECRET = ''
 SCREEN_NAME = 'Qxf21'
 
 
