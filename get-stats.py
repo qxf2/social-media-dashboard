@@ -71,6 +71,7 @@ if __name__ == "__main__":
     conn = sqlite3.connect(conf.DB_NAME)
     c = conn.cursor()    
     c.execute('''CREATE TABLE if not exists stats(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         recorddate text, 
         follower integer, 
         following integer,
@@ -81,10 +82,14 @@ if __name__ == "__main__":
         nsubscriber integer,
         blog integer,
         docker integer)''')
+
+    sql = "insert into stats (recorddate,follower,following,gforks,gsubscriber,gstars,newsletter,nsubscriber,blog,docker) values (?,?,?,?,?,?,?,?,?,?);"
+    data = (dt_string,twitter_stats['followers'],twitter_stats['following'],github_forks,subscribers,stars,campaigns_count,subscribers_count,blog_post_count,pull_count)
+    c.execute(sql, data)
     
-    c.execute("INSERT into stats VALUES(?,?,?,?,?,?,?,?,?,?)",(dt_string,twitter_stats['followers'],twitter_stats['following'],github_forks,subscribers,stars,campaigns_count,subscribers_count,blog_post_count,pull_count))
+    #c.execute("INSERT into stats VALUES(?,?,?,?,?,?,?,?,?,?)",(dt_string,twitter_stats['followers'],twitter_stats['following'],github_forks,subscribers,stars,campaigns_count,subscribers_count,blog_post_count,pull_count))
     conn.commit()
-    c.execute("SELECT * FROM stats ORDER BY recorddate DESC LIMIT 1")
+    c.execute("SELECT * FROM stats ORDER BY id DESC LIMIT 1")
     result = c.fetchone()
     print(result)
     conn.close()

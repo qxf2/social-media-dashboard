@@ -9,7 +9,7 @@ app = Flask(__name__)
 def home():
     conn = sqlite3.connect(conf.DB_NAME)
     c = conn.cursor()
-    c.execute("SELECT * FROM stats ORDER BY recorddate DESC LIMIT 1")
+    c.execute("SELECT * FROM stats ORDER BY id DESC LIMIT 1")
     result = c.fetchone()
     recorddate = result[0]
     followers = result[1]
