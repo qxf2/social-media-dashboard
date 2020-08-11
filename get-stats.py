@@ -71,7 +71,6 @@ if __name__ == "__main__":
     conn = sqlite3.connect(conf.DB_NAME)
     c = conn.cursor()    
     c.execute('''CREATE TABLE if not exists stats(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
         recorddate text, 
         follower integer, 
         following integer,
@@ -81,7 +80,8 @@ if __name__ == "__main__":
         newsletter integer,
         nsubscriber integer,
         blog integer,
-        docker integer)''')
+        docker integer,
+        id INTEGER PRIMARY KEY AUTOINCREMENT)''')
 
     sql = "insert into stats (recorddate,follower,following,gforks,gsubscriber,gstars,newsletter,nsubscriber,blog,docker) values (?,?,?,?,?,?,?,?,?,?);"
     data = (dt_string,twitter_stats['followers'],twitter_stats['following'],github_forks,subscribers,stars,campaigns_count,subscribers_count,blog_post_count,pull_count)
