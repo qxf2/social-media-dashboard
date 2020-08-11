@@ -12,7 +12,7 @@ def home():
     c.execute("SELECT * FROM stats ORDER BY id DESC LIMIT 1")
     result = c.fetchone()
     recorddate = result[1]
-    followers = result[1]
+    followers = result[2]
     following = result[3]
     github_forks = result[4]
     github_subscribers = result[5]
